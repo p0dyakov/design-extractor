@@ -6,6 +6,7 @@ import { generateDesignSystem } from './services/geminiService';
 import type { DesignSystem, ExtractedTokens } from './types';
 import { ErrorDisplay } from './components/ErrorDisplay';
 import { ApiKeyInput } from './components/ApiKeyInput';
+import { trackEvent, EventNames } from './services/analytics';
 
 const App: React.FC = () => {
     const [inputValue, setInputValue] = useState<string>('');
@@ -36,6 +37,7 @@ const App: React.FC = () => {
             return;
         }
 
+        trackEvent(EventNames.ANALYZE_START);
         setIsLoading(true);
         setError(null);
         setDesignSystem(null);
@@ -45,17 +47,21 @@ const App: React.FC = () => {
 
             const tokens: ExtractedTokens = extractDesignTokens(htmlContent);
             if (tokens.colors.length === 0 && tokens.fontFamilies.length === 0) {
-                setError("No actionable design tokens (colors, fonts) found in the provided HTML. Please ensure the HTML contains CSS styles.");
+                const errorMsg = "No actionable design tokens (colors, fonts) found in the provided HTML. Please ensure the HTML contains CSS styles.";
+                setError(errorMsg);
+                trackEvent(EventNames.ANALYZE_ERROR, { error_message: errorMsg });
                 setIsLoading(false);
                 return;
             }
 
             const generatedSystem = await generateDesignSystem(tokens, apiKey);
             setDesignSystem(generatedSystem);
+            trackEvent(EventNames.ANALYZE_SUCCESS);
         } catch (e) {
             console.error(e);
             const errorMessage = e instanceof Error ? e.message : "An unknown error occurred.";
             setError(`Failed to generate design system. ${errorMessage}`);
+            trackEvent(EventNames.ANALYZE_ERROR, { error_message: errorMessage });
         } finally {
             setIsLoading(false);
         }

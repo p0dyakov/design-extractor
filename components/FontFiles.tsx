@@ -1,12 +1,22 @@
 import React from 'react';
 import type { AssetFile } from '../types';
+import { trackEvent, EventNames } from '../services/analytics';
 
 interface AssetLibraryProps {
     files: AssetFile[];
+    assetType: 'font' | 'icon';
 }
 
-export const AssetLibrary: React.FC<AssetLibraryProps> = ({ files }) => {
+export const AssetLibrary: React.FC<AssetLibraryProps> = ({ files, assetType }) => {
     const isSvg = (url: string) => /\.svg$/i.test(url);
+
+    const handleDownloadClick = (file: AssetFile) => {
+        trackEvent(EventNames.DOWNLOAD_ASSET, {
+            asset_type: assetType,
+            asset_name: file.name,
+            asset_url: file.url,
+        });
+    };
 
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
@@ -25,6 +35,7 @@ export const AssetLibrary: React.FC<AssetLibraryProps> = ({ files }) => {
                         target="_blank"
                         rel="noopener noreferrer"
                         download
+                        onClick={() => handleDownloadClick(file)}
                         className="flex-shrink-0 flex items-center justify-center h-8 w-8 bg-neutral-700 text-white rounded-md hover:bg-neutral-600 transition-colors"
                         title="Download"
                     >

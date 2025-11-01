@@ -23,8 +23,8 @@ export const DesignSystemDisplay: React.FC<DesignSystemDisplayProps> = ({ system
                 )}
                 {system.typographyScale?.length > 0 && (
                     <div>
-                        <h3 className="text-xl font-semibold text-white mb-4">Typography Scale</h3>
-                        <TypographyScale typos={system.typographyScale} />
+                        <h3 className="text-xl font-semibold text-white mb-4">Typography</h3>
+                        <TypographyScale typos={system.typographyScale} fontFiles={system.fontFiles} />
                     </div>
                 )}
                 {system.layoutSystem?.length > 0 && (
@@ -41,14 +41,14 @@ export const DesignSystemDisplay: React.FC<DesignSystemDisplayProps> = ({ system
                 )}
                 {system.fontFiles?.length > 0 && (
                     <div>
-                        <h3 className="text-xl font-semibold text-white mb-4">Downloadable Font Files</h3>
-                        <AssetLibrary files={system.fontFiles} />
+                        <h3 className="text-xl font-semibold text-white mb-4">Fonts</h3>
+                        <AssetLibrary files={system.fontFiles} assetType="font" />
                     </div>
                 )}
                  {system.iconFiles?.length > 0 && (
                     <div>
-                        <h3 className="text-xl font-semibold text-white mb-4">Downloadable Icon Files</h3>
-                        <AssetLibrary files={system.iconFiles} />
+                        <h3 className="text-xl font-semibold text-white mb-4">Icons</h3>
+                        <AssetLibrary files={system.iconFiles} assetType="icon" />
                     </div>
                 )}
                 {system.markdownContent && (
