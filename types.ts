@@ -3,6 +3,7 @@ export interface ExtractedTokens {
     fontFamilies: string[];
     fontUrls: string[];
     iconUrls: string[];
+    borderRadii: string[];
 }
 
 export interface ColorToken {
@@ -28,6 +29,13 @@ export interface LayoutToken {
     description: string;
 }
 
+export interface BorderRadiusToken {
+    name: string;
+    variable: string;
+    value: string;
+    description: string;
+}
+
 export interface ComponentToken {
     name: string;
     description: string;
@@ -44,6 +52,7 @@ export interface DesignSystem {
     colorPalette: ColorToken[];
     typographyScale: TypoToken[];
     layoutSystem: LayoutToken[];
+    borderRadiusTokens: BorderRadiusToken[];
     uiComponents: ComponentToken[];
     fontFiles: AssetFile[];
     iconFiles: AssetFile[];

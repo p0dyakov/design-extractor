@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { trackEvent, EventNames } from '../services/analytics';
 
 interface CodeBlockProps {
     content: string;
@@ -10,7 +9,6 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({ content }) => {
 
     const handleCopy = () => {
         navigator.clipboard.writeText(content);
-        trackEvent(EventNames.COPY_MARKDOWN);
         setCopied(true);
         setTimeout(() => setCopied(false), 2000);
     };

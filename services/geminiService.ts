@@ -48,6 +48,20 @@ const responseSchema = {
                  required: ["name", "variable", "value", "description"],
             }
         },
+        borderRadiusTokens: {
+            type: Type.ARRAY,
+            description: "An array of border radius tokens.",
+            items: {
+                type: Type.OBJECT,
+                properties: {
+                    name: { type: Type.STRING, description: "Semantic name, e.g., 'Radius Small' or 'Pill Shape'" },
+                    variable: { type: Type.STRING, description: "CSS custom property, e.g., '--radius-sm'" },
+                    value: { type: Type.STRING, description: "The value with units, e.g., '4px' or '9999px'" },
+                    description: { type: Type.STRING, description: "Brief description of its use." },
+                },
+                 required: ["name", "variable", "value", "description"],
+            }
+        },
         uiComponents: {
             type: Type.ARRAY,
             description: "An array of replicated atomic UI components.",
@@ -91,7 +105,7 @@ const responseSchema = {
             description: "A complete Markdown file content that documents the design system with variables and usage examples for all token types.",
         },
     },
-    required: ["colorPalette", "typographyScale", "layoutSystem", "uiComponents", "fontFiles", "iconFiles", "markdownContent"],
+    required: ["colorPalette", "typographyScale", "layoutSystem", "borderRadiusTokens", "uiComponents", "fontFiles", "iconFiles", "markdownContent"],
 };
 
 
@@ -111,6 +125,9 @@ export const generateDesignSystem = async (tokens: ExtractedTokens, apiKey: stri
 
         Extracted Font Families:
         ${tokens.fontFamilies.join(', ')}
+        
+        Extracted Border Radii:
+        ${tokens.borderRadii.join(', ')}
 
         Extracted Font URLs:
         ${tokens.fontUrls.join(', ')}
@@ -126,21 +143,23 @@ export const generateDesignSystem = async (tokens: ExtractedTokens, apiKey: stri
 
         3.  **Layout & Spacing**: Analyze the HTML for common spacing patterns (margins, paddings) and container widths. Define a spacing scale (e.g., sm, md, lg) and layout tokens. Values should have units (e.g., 8px, 1280px).
 
-        4.  **UI Components**: Identify 2-4 distinct, atomic UI components from the HTML (e.g., buttons, input fields, tags, cards). For each component:
+        4.  **Border Radius**: Analyze the border-radius values. Define a scale (e.g., sm, md, lg, full). Assign semantic names and CSS variables.
+
+        5.  **UI Components**: Identify 2-4 distinct, atomic UI components from the HTML (e.g., buttons, input fields, tags, cards). For each component:
             - Provide a semantic name (e.g., 'Primary Button', 'Text Input').
             - Write clean, semantic HTML for the component.
             - Write self-contained, non-nested CSS for the component. DO NOT use preprocessors. Use the color and spacing variables you defined earlier if possible. The CSS should style the component from scratch.
 
-        5.  **Asset Files (Fonts & Icons)**:
+        6.  **Asset Files (Fonts & Icons)**:
             - For each Font URL, create a font file object. The 'name' should be the filename extracted from the URL.
             - For each Icon URL, create an icon file object. The 'name' should be the filename.
 
-        6.  **Markdown Content**: Generate a complete Markdown (.md) file content. This file should be a comprehensive guide to the design system, including:
+        7.  **Markdown Content**: Generate a complete Markdown (.md) file content. This file should be a comprehensive guide to the design system, including:
             - An introduction.
-            - Sections for Color, Typography, and Layout tokens with CSS variables and usage examples.
+            - Sections for Color, Typography, Layout, and Border Radius tokens with CSS variables and usage examples.
             - A section showcasing the UI Components with their code snippets.
 
-        7.  **Final Output**: Structure everything into a single, valid JSON object that strictly follows the provided schema. Do not include any text or explanations outside of the JSON object.
+        8.  **Final Output**: Structure everything into a single, valid JSON object that strictly follows the provided schema. Do not include any text or explanations outside of the JSON object.
     `;
 
     try {

@@ -14,7 +14,7 @@ export const AnalysisInput: React.FC<AnalysisInputProps> = ({ inputValue, setInp
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 placeholder="Paste full HTML source code here..."
-                className="w-full h-36 pl-6 pr-48 py-4 bg-neutral-900 border border-neutral-800 rounded-xl resize-y focus:outline-none focus:ring-2 focus:ring-white transition-shadow duration-200 text-gray-300 placeholder-gray-500 custom-scrollbar caret-white resize-handle-hidden"
+                className="w-full h-48 pl-6 pr-48 py-4 bg-neutral-900 border border-neutral-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-white transition-shadow duration-200 text-gray-300 placeholder-gray-500 custom-scrollbar caret-white resize-handle-hidden"
                 disabled={isLoading}
             />
             <button

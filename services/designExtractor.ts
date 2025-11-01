@@ -3,7 +3,7 @@ import type { ExtractedTokens } from '../types';
 const COLOR_REGEX = /(#[0-9a-fA-F]{3,8}|(rgba?|hsla?)\([^)]+\))/g;
 const FONT_FAMILY_REGEX = /font-family:\s*([^;\}]+)/g;
 const FONT_URL_REGEX = /@font-face\s*\{[^}]*?src:\s*url\((['"]?)(.*?)\1\)[^}]*?\}/g;
-// More robust regex for URLs in CSS and attributes
+const BORDER_RADIUS_REGEX = /border-radius:\s*([^;\}]+)/g;
 const GENERIC_URL_REGEX = /(?:url\(|src=|href=)(['"]?)([^"')]+\.(svg|woff2?|ttf|otf|eot))(\?[^"')]*)?\1/g;
 
 
@@ -22,7 +22,11 @@ export const extractDesignTokens = (htmlContent: string): ExtractedTokens => {
     const uniqueFontFamilies = [...new Set(fontFamilies)].filter(f => !/^-apple-system|BlinkMacSystemFont|Segoe UI|Roboto|Oxygen|Ubuntu|Cantarell|Fira Sans|Droid Sans|Helvetica Neue|sans-serif|serif|monospace/i.test(f));
 
 
-    // 3. Extract all potential asset URLs (fonts and icons)
+    // 3. Extract Border Radii
+    const radii = htmlContent.match(BORDER_RADIUS_REGEX) || [];
+    const uniqueRadii = [...new Set(radii.map(r => r.replace('border-radius:', '').trim()))];
+
+    // 4. Extract all potential asset URLs (fonts and icons)
     const allUrls = new Set<string>();
     let urlMatch;
     while ((urlMatch = FONT_URL_REGEX.exec(htmlContent)) !== null) {
@@ -32,7 +36,7 @@ export const extractDesignTokens = (htmlContent: string): ExtractedTokens => {
         allUrls.add(urlMatch[2]);
     }
 
-    // 4. Separate fonts from icons based on file extension
+    // 5. Separate fonts from icons based on file extension
     const finalFontUrls: string[] = [];
     const finalIconUrls: string[] = [];
     
@@ -50,5 +54,6 @@ export const extractDesignTokens = (htmlContent: string): ExtractedTokens => {
         fontFamilies: uniqueFontFamilies,
         fontUrls: [...new Set(finalFontUrls)],
         iconUrls: [...new Set(finalIconUrls)],
+        borderRadii: uniqueRadii,
     };
 };

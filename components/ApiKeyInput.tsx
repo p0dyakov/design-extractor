@@ -20,7 +20,7 @@ export const ApiKeyInput: React.FC<ApiKeyInputProps> = ({ apiKey, setApiKey }) =
                     value={apiKey}
                     onChange={(e) => setApiKey(e.target.value)}
                     placeholder="Enter your API key here..."
-                    className="w-full pl-4 pr-12 py-2 bg-neutral-900 border border-neutral-800 rounded-md focus:outline-none focus:ring-2 focus:ring-white transition-shadow duration-200 text-gray-300 placeholder-gray-500"
+                    className="w-full pl-4 pr-12 py-2 bg-neutral-900 border border-neutral-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-white transition-shadow duration-200 text-gray-300 placeholder-gray-500"
                 />
                 <button
                     type="button"
