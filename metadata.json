@@ -1,0 +1,5 @@
+{
+  "name": "design-extractor",
+  "description": "An application to extract colors and fonts from a website's HTML, use Gemini to generate a design system, and export it as a Markdown file. It also provides links to download font files.",
+  "requestFramePermissions": []
+}

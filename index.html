@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Style Sieve - AI Design System Extractor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              'neutral-950': '#101010',
+              'neutral-900': '#1C1C1C',
+              'neutral-800': '#2A2A2A',
+              'neutral-700': '#3C3C3C',
+            },
+            keyframes: {
+              'fade-in': {
+                '0%': { opacity: '0', transform: 'translateY(10px)' },
+                '100%': { opacity: '1', transform: 'translateY(0)' },
+              },
+              'progress-bar': {
+                '0%': { left: '-100%' },
+                '100%': { left: '100%' },
+              }
+            },
+            animation: {
+              'fade-in': 'fade-in 0.5s ease-out forwards',
+              'progress-bar': 'progress-bar 1.5s linear infinite',
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      /* Custom scrollbar styles */
+      .custom-scrollbar::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-track {
+        background: #1C1C1C; /* neutral-900 */
+        border-radius: 4px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: #3C3C3C; /* neutral-700 */
+        border-radius: 4px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+        background: #5a5a5a;
+      }
+      /* Hide the default textarea resizer handle */
+      .resize-handle-hidden::-webkit-resizer {
+        display: none;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.28.0"
+  }
+}
+</script>
+</head>
+  <body class="bg-neutral-950 text-gray-200">
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>
